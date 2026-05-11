@@ -32,6 +32,41 @@ export default function Home() {
 
   }
 
+  /* REALTIME SEARCH */
+  useEffect(() => {
+
+    if (!search.trim()) {
+
+      setResults([])
+      return
+
+    }
+
+    const keyword =
+      search.toLowerCase().trim()
+
+    const filtered =
+      documents.filter((item) => {
+
+        const gabungan = `
+          ${item.Nama || ""}
+          ${item.Keyword || ""}
+          ${item.Kategori || ""}
+          ${item.Tipe || ""}
+          ${item.Tahun || ""}
+          ${item.Bulan || ""}
+          ${item.Tanggal || ""}
+        `
+          .toLowerCase()
+
+        return gabungan.includes(keyword)
+
+      })
+
+    setResults(filtered)
+
+  }, [search, documents])
+
   function handleSearch() {
 
     if (!search.trim()) {
@@ -70,10 +105,9 @@ export default function Home() {
 
     <div className="min-h-screen relative pb-28">
 
-      {/* BACKGROUND IMAGE */}
+      {/* BACKGROUND */}
       <div className="fixed inset-0 -z-10">
 
-        {/* IMAGE */}
         <img
           src="https://i.imgur.com/gPX6ggr.png"
           alt="Background"
@@ -84,7 +118,6 @@ export default function Home() {
           "
         />
 
-        {/* OVERLAY */}
         <div className="
           absolute
           inset-0
@@ -119,7 +152,7 @@ export default function Home() {
           {/* LOGO */}
           <img
             src="https://i.imgur.com/pzIV8If.png"
-            alt="Logo PT Tunas Jaya Sanur"
+            alt="Logo"
             className="
               w-16
               h-16
